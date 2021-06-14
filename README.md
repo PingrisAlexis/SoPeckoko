@@ -35,10 +35,16 @@
 - Implement a logical data model in accordance with regulations.
 
 ### Installation:
+To run the project, you need to install :
 
+- NodeJS version 12.14 or 14.0 
+
+- Angular CLI version 7.0.2.
+
+- node-sass : be careful to take the version corresponding to NodeJS. For Node 14.0 for example, install node-sass in version 4.14+.
+
+
+#### Frontend part:
 Clone the front-end project on https://github.com/OpenClassrooms-Student-Center/dwj-projet6.
-Clone this repo. From within the project folder, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
+With a terminal, go to the "frontend" folder then:
+"npm install"
