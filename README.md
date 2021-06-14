@@ -35,6 +35,7 @@
 - Implement a logical data model in accordance with regulations.
 
 ### Installation:
+
 To run the project, you need to install :
 
 - NodeJS version 12.14 or 14.0 
@@ -45,8 +46,10 @@ To run the project, you need to install :
 
 
 #### Frontend part:
-Clone the front-end project on https://github.com/OpenClassrooms-Student-Center/dwj-projet6.
-With a terminal, go to the "frontend" folder then:
+
+- Clone the front-end project on https://github.com/OpenClassrooms-Student-Center/dwj-projet6.
+
+- With a terminal, go to the "frontend" folder then:
 `npm install
 npm start`
 
