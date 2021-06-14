@@ -52,3 +52,9 @@ To run the project, you need to install :
 - With a terminal, go to the "frontend" folder then:
 `npm install` and `npm start`.
 
+#### Backend part:
+
+- Clone the front-end project on https://github.com/OpenClassrooms-Student-Center/dwj-projet6.
+
+- With a terminal, go to the "frontend" folder then:
+`npm install` and `npm start`.
