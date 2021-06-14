@@ -15,6 +15,8 @@
 - The application strictly enforces authentication on all routes.
 
 - The application stores email addresses in the database as unique.
+
+- The number of likes/dislikes and the like/dislike arrays must be updated to implement the feature. 
   
 ### Elements provided:
 
