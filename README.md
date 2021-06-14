@@ -52,9 +52,11 @@ To run the project, you need to install :
 - With a terminal, go to the "frontend" folder then:
 `npm install` and `npm start`.
 
+- Run the API on http://localhost:4200.
+
 #### Backend part:
 
-- Clone the front-end project on https://github.com/OpenClassrooms-Student-Center/dwj-projet6.
+- Clone the back-end project on https://github.com/PingrisAlexis/PingrisAlexis_06_29052021.git.
 
-- With a terminal, go to the "frontend" folder then:
-`npm install` and `npm start`.
+- With a terminal, go to the "backend" folder then:
+`npm install` and run `nodemon`.
