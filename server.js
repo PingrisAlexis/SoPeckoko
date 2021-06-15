@@ -2,8 +2,6 @@
 const http = require('http');
 const app = require('./app');
 
-//Optimisation of server.js
-
 //normalizePort function returns a valid port, either as a number or as a string.
 const normalizePort = val => {
   const port = parseInt(val, 10);
@@ -17,8 +15,8 @@ const normalizePort = val => {
   return false;
 };
 
-
-const port = normalizePort(process.env.PORT || '3000'); // if process.env.PORT is not available then we use port 3000.
+// if process.env.PORT is not available then we use port 3000.
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 
@@ -30,11 +28,11 @@ const errorHandler = error => {
   const address = server.address();
   const bind = typeof address === 'string' ? 'pipe ' + address : 'port: ' + port;
   switch (error.code) {
-    case 'EACCES':          //Permission denied
+    case 'EACCES':          //Permission denied.
       console.error(bind + ' requires elevated privileges.');
       process.exit(1);
       break;
-    case 'EADDRINUSE':      //Port already in use
+    case 'EADDRINUSE':      //Port already in use.
       console.error(bind + ' is already in use.');
       process.exit(1);
       break;
@@ -47,7 +45,7 @@ const errorHandler = error => {
 const server = http.createServer(app);
 
 
-//Launch server, and listen if there are errors
+//Launch server, and listen if there are errors.
 server.on('error', errorHandler);
 server.on('listening', () => {
   const address = server.address();
@@ -55,5 +53,5 @@ server.on('listening', () => {
   console.log('Listening on ' + bind);
 });
 
-// The server listens to the port defined above
+// The server listens to the port defined above.
 server.listen(port);

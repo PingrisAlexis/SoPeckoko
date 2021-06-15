@@ -1,26 +1,42 @@
-//Import Bcrypt package: to hash password, use salt
+//Import Bcrypt package: to hash password, use salt.
 const bcrypt = require('bcrypt');
-//Import JsonWebToken package: to assign a token to a user when they log in
+//Import JsonWebToken package: to assign a token to a user when they log in.
 const jwt = require('jsonwebtoken');
-//Import the user's model, create by mongoose
+//Import Maskdata package: to hash mail adress.
+const MaskData = require('maskdata');
+//Import the user's model, create by mongoose.
 const User = require('../models/User');
 
-
-
+//Middleware to create a new user account.
 exports.signup = (req, res, next) => {
-  bcrypt.hash(req.body.password, 10)
-    .then(hash => {
-      const user = new User({
-        email: req.body.email,
-        password: hash
-      });
-      user.save()
-        .then(() => res.status(201).json({ message: 'New user has been created !' }))
-        .catch(error => res.status(400).json({ error }));
-    })
-    .catch(error => res.status(500).json({ error }));
+  var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$");
+  if (mediumRegex.test(req.body.password) == false) {
+    res.status(400).json({ error })
+  } else {
+    const maskedEmail = MaskData.maskEmail2(req.body.email, emailMask2Options);
+    bcrypt.hash(req.body.password, 10)
+      .then(hash => {
+        const user = new User({
+          email: req.body.email,
+          emailmasked: maskedEmail,
+          password: hash
+        });
+        user.save()
+          .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+          .catch(error => res.status(400).json({ error }));
+      })
+      .catch(error => res.status(500).json({ error }));
+  }
+};
+//Function to hash mail adress.
+const emailMask2Options = {
+  maskWith: "*",
+  unmaskedStartCharactersBeforeAt: 3,
+  unmaskedEndCharactersAfterAt: 2,
+  maskAtTheRate: false
 };
 
+//Middleware to connect a user account.
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email })
     .then(user => {

@@ -6,16 +6,9 @@ const uniqueValidator = require('mongoose-unique-validator');
 
 //Define user's schema
 const userSchema = mongoose.Schema({
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    match: [/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/, "Please enter a valid email address"],
-  },
-  password: {
-    type: String,
-    required: true
-  },
+  email: { type: String, required: true, unique: true, },
+  emailmasked: { type: String, required: true },
+  password: { type: String, required: true },
 });
 
 // Apply the uniqueValidator plugin to userSchema
