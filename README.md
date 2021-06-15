@@ -65,4 +65,4 @@ To run the project, you need to install :
 
 - Create `.env` files in the "backend" folder, then, add the line of code sent separately.
 
-- -the server listens on the port: http://localhost:3000.
+- The server listens on the port: http://localhost:3000.
