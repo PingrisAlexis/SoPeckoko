@@ -54,7 +54,7 @@ To run the project, you need to install :
 - With a terminal, go to the "frontend" folder then:
 `npm install` and `npm start`.
 
-- Run the API on http://localhost:4200.
+- Run the API on the port: http://localhost:4200.
 
 #### Backend part:
 
@@ -64,3 +64,5 @@ To run the project, you need to install :
 
 - With a terminal, go to the "backend" folder then:
 `npm install` and run `nodemon`.
+
+- -the server listens on the port: http://localhost:3000.
