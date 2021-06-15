@@ -63,6 +63,6 @@ To run the project, you need to install :
 - With a terminal, go to the "backend" folder then:
 `npm install` and run `nodemon`.
 
-- Create `.env` files in the "backend" folder, then, add the line of code sent separately.
+- Create `.env` file in the "backend" folder, then, add the line of code sent separately.
 
 - The server listens on the port: http://localhost:3000.
