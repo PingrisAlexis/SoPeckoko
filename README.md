@@ -44,7 +44,7 @@ To run the project, you need to install :
 
 - Angular CLI version 7.0.2. ` npm install -g @angular/cli@7.0.2`
 
-- node-sass : be careful to take the version corresponding to NodeJS. For Node 14.0 for example, install node-sass in version 4.14+. 
+- node-sass : be careful to take the version corresponding to NodeJS. For Node 14.0 for example, install node-sass in version 4.14+. You should do 
 `npm i node-sass@4.14`
 
 
