@@ -60,9 +60,9 @@ To run the project, you need to install :
 
 - Clone the back-end project on https://github.com/PingrisAlexis/PingrisAlexis_06_29052021.git.
 
-- Create `.env` files in the main folder, then, add the line of code sent separately.
-
 - With a terminal, go to the "backend" folder then:
 `npm install` and run `nodemon`.
+
+- Create `.env` files in the "backend" folder, then, add the line of code sent separately.
 
 - -the server listens on the port: http://localhost:3000.
