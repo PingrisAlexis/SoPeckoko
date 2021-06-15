@@ -33,7 +33,7 @@ exports.getOneSauce = (req, res, next) => {
   );
 };
 
-// Modification of a sauce.
+//Modification of a sauce.
 exports.modifyOneSauce = (req, res, next) => {
   const sauceObject = req.file ?
     {
@@ -45,7 +45,7 @@ exports.modifyOneSauce = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-// Deleting a sauce.
+//Deleting a sauce.
 exports.deleteOneSauce = (req, res, next) => {
   Sauce.findOne({ _id: req.params.id })
     .then(sauce => {
@@ -59,11 +59,11 @@ exports.deleteOneSauce = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
-// Retrieving the list of sauces.
+//Retrieving the list of sauces.
 exports.getAllSauce = (req, res, next) => {
   Sauce.find().then(
-    (sauces) => {
-      res.status(200).json(sauces);
+    (sauce) => {
+      res.status(200).json(sauce);
     }
   ).catch(
     (error) => {
@@ -74,9 +74,9 @@ exports.getAllSauce = (req, res, next) => {
   );
 };
 
-// Like or Dislike one sauce.
+//Like or Dislike one sauce.
 exports.likeDislikeSauce = (req, res, next) => {
-  const like = new Sauce({
+  const isUserLike = new Sauce({
     likes: req.body.like,
     userId: req.body.userId
   });
@@ -86,30 +86,29 @@ exports.likeDislikeSauce = (req, res, next) => {
     (sauce) => {
       Sauce.updateOne({ _id: req.params.id }, sauce)
       //If user want to like.
-      if (like.likes == 1) {
-        let Disliked = sauce.usersDisliked.indexOf(like.userId);
-        if (Disliked > -1) {
-          sauce.usersDisliked.splice(Liked, 1);
-          sauce.dislikes = sauce.dislikes - 1;
-        }
+      if (isUserLike.likes === 1) {
         sauce.likes = sauce.likes + 1;
-        sauce.usersLiked.push(like.userId);
-        //If user want to not like or dislike anymore.
-      } else if (like.likes == 0) {
-        let Liked = sauce.usersLiked.indexOf(like.userId);
-        if (Liked > -1) {
-          sauce.usersLiked.splice(Liked, 1);
+        sauce.usersLiked.push(isUserLike.userId);
+      }
+      //If user want to delete like or dislike.
+      else if (isUserLike.likes === 0) {
+        //If user already like the sauce and want to delete like.
+        let userLikedSauce = sauce.usersLiked.indexOf(isUserLike.userId);
+        if (userLikedSauce >= 0) {
+          sauce.usersLiked.splice(userLikedSauce, 1);
           sauce.likes = sauce.likes - 1;
         }
-        let Disliked = sauce.usersDisliked.indexOf(like.userId);
-        if (Disliked > -1) {
-          sauce.usersDisliked.splice(Liked, 1);
+        //If user already dislike the sauce and want to delete dislike.
+        let userDislikedSauce = sauce.usersDisliked.indexOf(isUserLike.userId);
+        if (userDislikedSauce >= 0) {
+          sauce.usersDisliked.splice(userDislikedSauce, 1);
           sauce.dislikes = sauce.dislikes - 1;
         }
-        //If user want to dislike.
-      } else if (like.likes == -1) {
+      }
+      //If user want to dislike.
+      else if (isUserLike.likes === -1) {
         sauce.dislikes = sauce.dislikes + 1;
-        sauce.usersDisliked.push(like.userId);
+        sauce.usersDisliked.push(isUserLike.userId);
       }
       sauce.save(sauce)
       res.status(200).json(sauce);
