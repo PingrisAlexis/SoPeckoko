@@ -1,14 +1,14 @@
-//Import package MULTER, to manage images 
+//Import package MULTER, to manage images.
 const multer = require('multer');
 
-//List of accepted image formats
+//List of accepted images formats.
 const MIME_TYPES = {
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
   'image/png': 'png'
 };
 
-// Storage location and file name
+// Storage location and file name.
 const storage = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, 'images');
@@ -19,5 +19,6 @@ const storage = multer.diskStorage({
     callback(null, name + Date.now() + '.' + extension);
   }
 });
+
 
 module.exports = multer({ storage: storage }).single('image');
