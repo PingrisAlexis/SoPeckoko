@@ -2,32 +2,34 @@
 const bcrypt = require('bcrypt');
 //Import JsonWebToken package: to assign a token to a user when they log in.
 const jwt = require('jsonwebtoken');
-//Import Maskdata package: to hash mail adress.
+//Import Maskdata package: to mask various kind of data.
 const MaskData = require('maskdata');
+//Import CryptoJS package: to encrypt mail adress.
+const cryptojs = require('crypto-js');
 //Import the user's model, create by mongoose.
 const User = require('../models/User');
 
+
 //Middleware to create a new user account.
 exports.signup = (req, res, next) => {
-  var mediumRegex = new RegExp("^(?=.{7,})(((?=.*[A-Z])(?=.*[a-z]))|((?=.*[A-Z])(?=.*[0-9]))|((?=.*[a-z])(?=.*[0-9]))).*$");
-  if (mediumRegex.test(req.body.password) == false) {
-    res.status(400).json({ error })
-  } else {
-    const maskedEmail = MaskData.maskEmail2(req.body.email, emailMask2Options);
-    bcrypt.hash(req.body.password, 10)
-      .then(hash => {
-        const user = new User({
-          email: req.body.email,
-          emailmasked: maskedEmail,
-          password: hash
-        });
-        user.save()
-          .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-          .catch(error => res.status(400).json({ error }));
-      })
-      .catch(error => res.status(500).json({ error }));
-  }
+  //Calculates a Hash-based Message Authentication Code (HMAC) using the Secure Hash Algorithm function (SHA256).
+  const cryptedEmail = cryptojs.HmacSHA256(req.body.email, process.env.CRPT_MAIL).toString();
+  //Mask mail adress.
+  const maskedEmail = MaskData.maskEmail2(req.body.email, emailMask2Options);
+  bcrypt.hash(req.body.password, 10)
+    .then(hash => {
+      const user = new User({
+        email: cryptedEmail,
+        emailmasked: maskedEmail,
+        password: hash
+      });
+      user.save()
+        .then(() => res.status(201).json({ message: 'User created !' }))
+        .catch(error => res.status(400).json({ error }));
+    })
+    .catch(error => res.status(500).json({ error }));
 };
+
 //Function to hash mail adress.
 const emailMask2Options = {
   maskWith: "*",
@@ -36,9 +38,11 @@ const emailMask2Options = {
   maskAtTheRate: false
 };
 
-//Middleware to connect a user account.
+//Middleware to connect a user account that already exist in the DB.
 exports.login = (req, res, next) => {
-  User.findOne({ email: req.body.email })
+  //Calculates a Hash-based Message Authentication Code (HMAC) using the Secure Hash Algorithm function (SHA256).
+  const cryptedEmail = cryptojs.HmacSHA256(req.body.email, process.env.CRPT_MAIL).toString();
+  User.findOne({ email: cryptedEmail })
     .then(user => {
       if (!user) {
         return res.status(401).json({ error: 'User not found !' });
@@ -50,9 +54,9 @@ exports.login = (req, res, next) => {
           }
           res.status(200).json({
             userId: user._id,
-            token: jwt.sign(
+            token: jwt.sign(          // encode a new token 
               { userId: user._id },
-              'RANDOM_TOKEN_SECRET',
+              process.env.TK_JWT,
               { expiresIn: '24h' }
             )
           });
