@@ -1,6 +1,6 @@
-# SoPeckoko
+# Project 5/6 - Web Developer Path
 
-## Project 6 OpenClassrooms - Build a secure API for a food review application.
+## Build a secure API for a food review application.
 
 ### Specifications:
 
