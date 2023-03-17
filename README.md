@@ -1,4 +1,4 @@
-# PingrisAlexis_06_29052021
+# SoPeckoko
 
 ## Project 6 OpenClassrooms - Build a secure API for a food review application.
 
